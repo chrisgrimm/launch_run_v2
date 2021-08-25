@@ -33,7 +33,7 @@ conns = client.run_command(
 print('Waiting for containers to be built...')
 
 finished = {host: False for host in hosts}
-denom = 34
+denom = 18
 bars = {host: tqdm.tqdm(total=denom, desc=host, position=i) for i, host in enumerate(hosts)}
 
 while not all(finished[host] for host in hosts):
@@ -50,9 +50,9 @@ while not all(finished[host] for host in hosts):
 
         
         
-for con in conns:
-    list(con.stdout)
-    print('Error', list(con.stderr))
+for host, con in zip(hosts, conns):
+    if con.exit_code != 0:
+        print(f'({host}) Error', list(con.stderr))
 
 print('Sending ray node commands')
 conns = client.run_command(f'echo "{password}" | sudo -S docker exec -d "{name}" {ray_cmd}')
