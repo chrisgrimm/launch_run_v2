@@ -1,8 +1,8 @@
 # (1) name 
 prv_key=$(cat ~/.ssh/id_rsa)
 pub_key=$(cat ~/.ssh/id_rsa.pub)
-#sudo docker system prune -af && \ 
-sudo docker build -t ray-docker2 \
+sudo docker system prune -af 
+sudo docker build -t ray-docker2 --no-cache \
 --build-arg ssh_prv_key="$prv_key" \
 --build-arg ssh_pub_key="$pub_key" \
 --build-arg uid="$(id -u)" \

@@ -33,20 +33,20 @@ conns = client.run_command(
 print('Waiting for containers to be built...')
 
 finished = {host: False for host in hosts}
-denom = 1700
+denom = 34
 bars = {host: tqdm.tqdm(total=denom, desc=host, position=i) for i, host in enumerate(hosts)}
 
 while not all(finished[host] for host in hosts):
     for host, con in zip(hosts, conns):
-        num_lines = 0
+        num_steps = 0
         try:
             for line in con.stdout:
-                num_lines += 1
+                num_steps += len(re.findall(r'^Step (\d+\/\d+)', line))
             finished[host] = True
         except Timeout:
             pass
         finally:
-            bars[host].update(num_lines)
+            bars[host].update(num_steps)
 
         
         
