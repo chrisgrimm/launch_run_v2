@@ -16,16 +16,11 @@ ARG ssh_pub_key
 ARG known_hosts
 ARG uid
 ARG gid
-ARG redis_port
-ARG name
-
-ENV REDIS_PORT=$redis_port
-ENV NODE_NAME=$name
 
 WORKDIR /app
 
 COPY ./hostsfile.txt ./hostsfile.txt
-COPY ./run_ray_head.py ./run_ray_head.py
+COPY ./launch_cluster.py ./launch_cluster.py
 
 RUN apt install -y git openssh-server libglib2.0-0 libgtk2.0-dev libgl1-mesa-glx rsync pssh vim tmux
 
@@ -41,6 +36,6 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
     chmod 600 /root/.ssh/id_rsa.pub
 
 # install requirements
-RUN python3.8 -m pip install --upgrade pip; pip install ray[default] ray[tune]
+RUN python3.8 -m pip install --upgrade pip; pip install ray[default] ray[tune] parallel-ssh
 ENV RAY_BACKEND_LOG_LEVEL=error
-CMD python3.8 run_ray_head.py $REDIS_PORT && /bin/bash
+CMD /bin/bash
