@@ -1,4 +1,5 @@
 from pssh.clients import ParallelSSHClient
+from pssh.exceptions import Timeout
 import sys
 import re
 import subprocess
@@ -24,10 +25,27 @@ print('Found hosts', hosts)
 
 client = ParallelSSHClient(hosts, user=user, pkey='/root/.ssh/id_rsa')
 conns = client.run_command(
-    f'cd launch_run_v2 && echo "{password}" | sudo -S ./spin_up_docker.sh "{name}"')
+    f'cd launch_run_v2 && echo "{password}" | sudo -S ./spin_up_docker.sh "{name}"',
+    read_timeout=1)
 
 # wait for hosts to spin up
 print('Waiting for containers to be built...')
+
+finished = {host: False for host in hosts}
+progresses = {host: 0 for host in hosts}
+while not all(finished[host] for host in hosts):
+    for host, con in zip(hosts, conns):
+        num_lines = 0
+        try:
+            for line in con.stdout:
+                num_lines += 1
+            finished[host] = True
+        except Timeout:
+            pass
+    print(progresses)
+
+        
+        
 for con in conns:
     list(con.stdout)
     print('Error', list(con.stderr))
