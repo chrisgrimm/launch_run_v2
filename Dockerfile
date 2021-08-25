@@ -36,6 +36,6 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
     chmod 600 /root/.ssh/id_rsa.pub
 
 # install requirements
-RUN python3.8 -m pip install --upgrade pip; pip install ray[default] ray[tune] parallel-ssh
+RUN python3.8 -m pip install --upgrade pip; pip install ray[default] ray[tune] parallel-ssh tqdm
 ENV RAY_BACKEND_LOG_LEVEL=error
 CMD /bin/bash

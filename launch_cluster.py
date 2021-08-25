@@ -3,6 +3,7 @@ from pssh.exceptions import Timeout
 import sys
 import re
 import subprocess
+import tqdm
 
 print('Launching...')
 
@@ -26,13 +27,15 @@ print('Found hosts', hosts)
 client = ParallelSSHClient(hosts, user=user, pkey='/root/.ssh/id_rsa')
 conns = client.run_command(
     f'cd launch_run_v2 && echo "{password}" | sudo -S ./spin_up_docker.sh "{name}"',
-    read_timeout=1)
+    read_timeout=0.1)
 
 # wait for hosts to spin up
 print('Waiting for containers to be built...')
 
 finished = {host: False for host in hosts}
-progresses = {host: 0 for host in hosts}
+denom = 1700
+bars = {host: tqdm.tqdm(total=denom, desc=host, position=i) for i, host in enumerate(hosts)}
+
 while not all(finished[host] for host in hosts):
     for host, con in zip(hosts, conns):
         num_lines = 0
@@ -42,7 +45,8 @@ while not all(finished[host] for host in hosts):
             finished[host] = True
         except Timeout:
             pass
-    print(progresses)
+        finally:
+            bars[host].update(num_lines)
 
         
         
