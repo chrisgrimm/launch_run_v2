@@ -28,6 +28,7 @@ COPY ./hostsfile.txt ./hostsfile.txt
 COPY ./launch_cluster.py ./launch_cluster.py
 COPY ./shutdown.sh ./shutdown.sh
 COPY ./shutdown_cluster.py ./shutdown_cluster.py
+COPY ./run_script.py ./run_script.py
 
 RUN apt install -y git 
 RUN apt install -y openssh-server 
