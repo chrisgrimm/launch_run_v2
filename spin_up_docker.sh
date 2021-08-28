@@ -5,7 +5,7 @@ sudo docker container stop $1
 sudo docker container rm $1
 sudo docker system prune -af 
 sudo docker build -t ray-docker2 --no-cache \
---build-arg is_head="$3" \ 
+--build-arg is_head="$3" \
 --build-arg name="$1" \
 --build-arg ssh_prv_key="$prv_key" \
 --build-arg ssh_pub_key="$pub_key" \
