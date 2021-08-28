@@ -17,4 +17,3 @@ with open('/app/hostsfile.txt', 'r') as f:
 client = ParallelSSHClient(hosts, user=user, pkey='/root/.ssh/id_rsa')
 cmd = f'echo "{password}" | sudo -S docker container stop {name}'
 conns = client.run_command(cmd)
-subprocess.run(cmd, shell=True)
