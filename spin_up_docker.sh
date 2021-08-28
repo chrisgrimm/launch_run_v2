@@ -1,7 +1,8 @@
 # (1) name  (2) password
 prv_key=$(cat ~/.ssh/id_rsa)
 pub_key=$(cat ~/.ssh/id_rsa.pub)
-sudo docker rm $1
+sudo docker container stop $1
+sudo docker container rm $1
 sudo docker system prune -af 
 sudo docker build -t ray-docker2 --no-cache \
 --build-arg name="$1" \
