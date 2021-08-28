@@ -17,9 +17,11 @@ ARG uid
 ARG gid
 ARG name
 ARG password
+ARG is_head
 
 ENV PASSWORD=$password
 ENV CONTAINER_NAME=$name
+ENV IS_HEAD=$is_head
 WORKDIR /app
 
 COPY ./hostsfile.txt ./hostsfile.txt
@@ -56,4 +58,4 @@ RUN pip install ray[tune]
 RUN pip install parallel-ssh
 RUN pip install tqdm
 ENV RAY_BACKEND_LOG_LEVEL=error
-CMD /bin/bash
+CMD /bin/bash; ./shutdown.sh

@@ -26,7 +26,7 @@ print('Found hosts', hosts)
 
 client = ParallelSSHClient(hosts, user=user, pkey='/root/.ssh/id_rsa')
 conns = client.run_command(
-    f'cd launch_run_v2 && echo "{password}" | sudo -S ./spin_up_docker.sh "{name}"',
+    f'cd launch_run_v2 && echo "{password}" | sudo -S ./spin_up_docker.sh "{name}" "{password}" 0',
     read_timeout=0.1)
 
 # wait for hosts to spin up
