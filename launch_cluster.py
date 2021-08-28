@@ -33,7 +33,7 @@ conns = client.run_command(
 print('Waiting for containers to be built...')
 
 finished = {host: False for host in hosts}
-denom = 34
+denom = 39
 bars = {host: tqdm.tqdm(total=denom, desc=host, position=i) for i, host in enumerate(hosts)}
 
 while not all(finished[host] for host in hosts):
