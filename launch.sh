@@ -1,4 +1,14 @@
 #(1) name (2) redis_port (3) user
+
+function cleanup () 
+{
+    stty echo
+    printf "\n"
+    exit 2
+}
+
+trap "cleanup" 2
+
 stty -echo
 printf "Password: "
 read password

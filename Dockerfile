@@ -31,7 +31,7 @@ RUN apt install -y libglib2.0-0
 RUN apt install -y libgtk2.0-0 
 RUN apt install -y libgtk2.0-dev 
 RUN apt install -y libgl1-mesa-glx 
-RUN apt install -y rsync p
+RUN apt install -y rsync
 RUN apt install -y ssh 
 RUN apt install -y vim 
 RUN apt install -y tmux
