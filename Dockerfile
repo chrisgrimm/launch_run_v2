@@ -58,4 +58,4 @@ RUN pip install ray[tune]
 RUN pip install parallel-ssh
 RUN pip install tqdm
 ENV RAY_BACKEND_LOG_LEVEL=error
-CMD /bin/bash; ./shutdown.sh
+CMD /bin/bash; sh ./shutdown.sh
