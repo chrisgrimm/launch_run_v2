@@ -40,6 +40,7 @@ RUN apt install -y rsync
 RUN apt install -y ssh 
 RUN apt install -y vim 
 RUN apt install -y tmux
+RUN apt install -y unp
 
 ## set up ssh directory
 RUN mkdir -p /root/.ssh && \

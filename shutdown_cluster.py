@@ -18,3 +18,5 @@ client = ParallelSSHClient(hosts, user=user, pkey='/root/.ssh/id_rsa')
 cmd = f'echo "{password}" | sudo -S docker container stop {name}'
 print('Shutting down nodes...')
 conns = client.run_command(cmd)
+print(list(conns[0].stderr))
+print(list(conns[0].stdout))
